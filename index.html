@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Accessible Website with Dark Mode</title>
+    <style>
+        body {
+            font-size: 16px;
+            color: #000000;
+            background-color: #FFFFFF;
+        }
+        #result {
+            color: black;
+            background-color: white;
+            padding: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body id="main">
+    <h1>Welcome to Our Website </h1>
+    <button id="modeBtn" aria-label="Toggle dark and light mode">Toggle Mode</button>
+    <button id="increaseFont" aria-label="Increase font size">Increase font size</button>
+    <button id="decreaseFont" aria-label="Decrease font size">Decrease font size</button>
+
+    <h2>Calculator</h2>
+    <input id="num1" type="number" aria-label="First number">
+    <input id="num2" type="number" aria-label="Second number">
+    <button onclick="calculate('add')" aria-label="Add numbers">Add</button>
+    <button onclick="calculate('subtract')" aria-label="Subtract numbers">Subtract</button>
+    <button onclick="calculate('multiply')" aria-label="Multiply numbers">Multiply</button>
+    <button onclick="calculate('divide')" aria-label="Divide numbers">Divide</button>
+    <p id="result" aria-live="polite">Result: </p>
+
+    <script>
+        let darkMode = false;
+        
+        document.getElementById("modeBtn").onclick = function() {
+            const body = document.body;
+            if (!darkMode) {
+                body.style.backgroundColor = "#000000";
+                body.style.color = "#FFFFFF";
+                darkMode = true;
+            } else {
+                body.style.backgroundColor = "#FFFFFF";
+                body.style.color = "#000000";
+                darkMode = false;
+            }
+        }
+
+        document.getElementById("increaseFont").onclick = function(){
+            document.body.style.fontSize = (parseInt(window.getComputedStyle(document.body).fontSize) + 1) + "px";
+        }
+        
+        document.getElementById("decreaseFont").onclick = function(){
+            document.body.style.fontSize = (parseInt(window.getComputedStyle(document.body).fontSize) - 1) + "px";
+        }
+
+        function calculate(operation) {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+            let result;
+
+            switch(operation) {
+                case 'add':
+                    result = num1 + num2;
+                    break;
+                case 'subtract':
+                    result = num1 - num2;
+                    break;
+                case 'multiply':
+                    result = num1 * num2;
+                    break;
+                case 'divide':
+                    if(num2 !== 0) {
+                        result = num1 / num2;
+                    } else {
+                        result = 'Error! Division by zero is undefined.';
+                    }
+                    break;
+            }
+
+            if (!isNaN(result)) {
+                document.getElementById("result").textContent = `Result: ${result}`;
+            }
+        }
+    </script>
+</body>
+</html>
